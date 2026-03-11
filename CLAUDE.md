@@ -785,7 +785,7 @@ echo "Recalibrator: $RECAL_URL"
 
 ## 15. METADADOS
 
-- **Autor**: Daniel Ferreira Polónia | dpolonia@gmail.com
+- **Autor**: Daniel Ferreira Polónia | DEGEIT, Universidade de Aveiro | GOVCOPP
 - **Data**: Março 2026
 - **Modelo base**: cenario_hormuz_portugal_impactos_20260310.xlsx
 - **Licença**: CC BY-NC-SA 4.0 (modelo); dados APIs sob licença das entidades emissoras

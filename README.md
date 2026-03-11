@@ -1,57 +1,57 @@
-# HormuzPT — Dashboard de Cenários Energéticos para Portugal
+# HormuzPT
 
-Dashboard interactivo que modela o impacto de um bloqueio segurador do Estreito de Ormuz sobre os preços dos combustíveis, o mix energético e o Orçamento de Estado portugueses.
+HormuzPT is a scenario-modeling environment for Portuguese energy-system exploration. The repository is structured for local development with Docker Compose and for controlled deployment to cloud infrastructure.
 
-## Funcionalidades
+## Development entry points
 
-- **Modelo de cenários** (Moderado / Severo / Extremo) com preços, elasticidade da procura e custo orçamental para 4-12 semanas
-- **Dados ao vivo** de INE, Banco de Portugal, BCE, Eurostat, API Aberta e ENSE-EPE
-- **Mix energético completo**: combustíveis rodoviários + gás natural (MIBGAS/TTF) + electricidade (OMIE)
-- **Recalibração semanal** com pipeline multi-LLM (Anthropic, OpenAI, Vertex AI) + evidência Scopus
-- **Página de histórico** com justificação académica de todas as alterações
-- **Q&A interactivo** com indicação do modelo LLM utilizado
+- `AGENTS.md` contains operational guidance for coding agents and development assistants.
+- `docs/product-spec.md` contains the technical product specification, architecture notes, API contracts, routing assumptions, and deployment context.
+- `data/model_state_initial.json` contains the baseline model state used for validation and regression checking.
 
-## Arquitectura
+## Local development
 
-```
-frontend/       → React + TypeScript + Vite (Cloud Run :8080)
-api-proxy/      → Node + Express (Cloud Run :8081)
-recalibrator/   → Python + FastAPI (Cloud Run :8082)
-```
+### Prerequisites
+- Docker and Docker Compose
+- A local `.env` file derived from `.env.example`
 
-## Quickstart (desenvolvimento local)
+### Quick start
+1. Copy `.env.example` to `.env`
+2. Fill in local development values
+3. Start the stack:
 
 ```bash
-cp .env.example .env
-# Editar .env com chaves reais
+
 docker compose up
 ```
 
-- Frontend: http://localhost:8080
-- API: http://localhost:8081
-- Recalibrador: http://localhost:8082
+### Expected services
+- Frontend: `http://localhost:8080`
+- API proxy: `http://localhost:8081`
+- Recalibrator: `http://localhost:8082`
 
-## Deploy no GCP
+## Repository layout
 
-```bash
-bash infra/secrets.sh   # 1 vez: provisionar Secret Manager
-bash deploy.sh           # Build + deploy dos 3 serviços + schedulers
+```text
+.
+├── AGENTS.md
+├── README.md
+├── docs/
+│   └── product-spec.md
+├── infra/
+│   ├── lifecycle.json
+│   └── secrets.sh
+├── data/
+│   └── model_state_initial.json
+├── docker-compose.yml
+├── .env.example
+└── .gitignore
 ```
 
-## Projecto GCP
+## Operational guidance
 
-- **Project ID**: `hormuzpt`
-- **Region**: `europe-west1`
+- Keep secrets out of version control.
+- Treat `infra/secrets.sh` and deployment-oriented infrastructure actions as manual operations.
+- Validate model changes against the baseline state before merging.
 
-## Documentação
-
-- `CLAUDE.md` — Prompt completo para Claude Code (especificação técnica exaustiva)
-- `data/model_state_initial.json` — Estado inicial do modelo com valores verificados
-
-## Autor
-
-Daniel Ferreira Polónia | dpolonia@gmail.com
-
-## Licença
-
-CC BY-NC-SA 4.0 (modelo). Dados das APIs sujeitos às licenças das entidades emissoras.
+## Migration note
+This repository previously used `CLAUDE.md` as the main agent-oriented instruction file. It now uses `AGENTS.md` as the neutral operational entry point, while `CLAUDE.md` remains as a compatibility bridge.
