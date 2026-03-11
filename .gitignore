@@ -1,40 +1,33 @@
-# ─── Secrets ───
+# Environment
 .env
-.env.local
-.env.*.local
+.env.*
 !.env.example
 
-# ─── Dependencies ───
-node_modules/
+# Secrets
+secrets.sh
+*.pem
+*.key
+*.json
+
+# OS / filesystem noise
+.DS_Store
+Thumbs.db
+*:Zone.Identifier
+
+# Python
 __pycache__/
 *.pyc
 .venv/
 venv/
 
-# ─── Build ───
-frontend/dist/
-api-proxy/dist/
-recalibrator/dist/
+# Node
+node_modules/
+dist/
+build/
 
-# ─── IDE ───
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
-
-# ─── OS ───
-.DS_Store
-Thumbs.db
-
-# ─── GCP ───
-*.key.json
-service-account*.json
-
-# ─── Cache local ───
-.cache/
+# Logs
 *.log
+firebase-debug.log
 
-.env
-secrets.sh
-*:Zone.Identifier
+# Tooling
+.antigravity/
