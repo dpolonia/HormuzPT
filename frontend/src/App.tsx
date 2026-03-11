@@ -40,7 +40,7 @@ export default function App() {
                                     <ControlPanel controls={controls} onChange={setControls} />
                                 </div>
                                 <div>
-                                    <PriceDashboard results={results} controls={controls} />
+                                    <PriceDashboard results={results} controls={controls} modelState={modelState} />
                                 </div>
                             </div>
                         </div>

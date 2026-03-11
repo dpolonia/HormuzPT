@@ -18,7 +18,7 @@ router.post('/chat', async (req, res) => {
         const tier = 'moderado';
 
         res.json({
-            answer: `[Stub] This is a placeholder response to: "${question}". LLM integration pending.`,
+            answer: `[Provisório] Resposta automática de demonstração. A integração LLM está pendente. Pergunta recebida: "${question}"`,
             model,
             tier,
             tokens_in: 0,
