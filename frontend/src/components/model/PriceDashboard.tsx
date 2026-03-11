@@ -319,8 +319,13 @@ export function PriceDashboard({ results, controls, modelState }: PriceDashboard
                                     {items.map((c, i) => (
                                         <div className="cascade-item" key={i}>
                                             <div className={`cascade-order o${c.ordem}`}>{c.ordem}ª</div>
-                                            <div style={{ flex: 1 }}>
+                                            <div style={{ flex: 1, display: 'flex', alignItems: 'center', gap: '8px' }}>
                                                 <div className="cascade-canal">{c.canal}</div>
+                                                {c.evidenceUrl && (
+                                                    <a href={c.evidenceUrl} target="_blank" rel="noopener noreferrer" title="Ver evidência" style={{ color: 'var(--text-muted)', textDecoration: 'none', fontSize: '0.8rem' }}>
+                                                        🔗
+                                                    </a>
+                                                )}
                                                 <div className="cascade-mag">
                                                     <span>{c.mag}</span>
                                                     <span

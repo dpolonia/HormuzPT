@@ -17,11 +17,26 @@ HormuzPT is a scenario-modeling environment for Portuguese energy-system explora
 ### Quick start
 1. Copy `.env.example` to `.env`
 2. Fill in local development values
-3. Start the stack:
-
+3. Start the stack in the background:
 ```bash
+docker compose up -d
+```
+4. Verify the stack is up and healthy:
+```bash
+bash scripts/test_regression.sh
+```
+5. To stop the stack:
+```bash
+docker compose down
+```
 
-docker compose up
+### Developer Handoff
+For architecture specifics, current stubs, and prioritized next steps for incoming developers, please read `docs/developer-handoff.md`.
+
+### Regression Testing
+A lightweight test suite protects critical API boundaries and model baseline calculations. Keep this passing before committing:
+```bash
+bash scripts/test_regression.sh
 ```
 
 ### Expected services

@@ -1,7 +1,8 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Controls, DEFAULT_CONTROLS, DEFAULT_MODEL_STATE } from './model/types';
 import { compute } from './model/engine';
 import { useModelState } from './api/useModelState';
+import { apiPost } from './api/client';
 import { Shell } from './components/layout/Shell';
 import { ControlPanel } from './components/controls/ControlPanel';
 import { PriceDashboard } from './components/model/PriceDashboard';
@@ -21,6 +22,15 @@ export default function App() {
         () => compute(modelState, controls),
         [modelState, controls],
     );
+
+    // Track scenario changes to history API
+    useEffect(() => {
+        apiPost('/history', {
+            user: 'User',
+            action: 'Mudança de Cenário',
+            details: { scenario: controls.scenario }
+        }).catch(err => console.warn('History tracking failed:', err));
+    }, [controls.scenario]);
 
     return (
         <>

@@ -2,15 +2,15 @@ import { useState, useEffect } from 'react';
 import { apiGet } from '../../api/client';
 
 interface HistoryEntry {
-    version: string;
-    created_at: string;
-    summary: string;
-    risk_class: string;
-    model_used: string;
+    id: number;
+    timestamp: string;
+    user: string;
+    action: string;
+    details: string;
 }
 
 interface HistoryData {
-    entries: HistoryEntry[];
+    events: HistoryEntry[];
 }
 
 export function HistoryPage() {
@@ -33,14 +33,13 @@ export function HistoryPage() {
         );
     }
 
-    if (!data || data.entries.length === 0) {
+    if (!data || data.events.length === 0) {
         return (
             <div className="empty-state fade-in">
                 <div className="icon">📝</div>
                 <p>Sem entradas no histórico de alterações.</p>
                 <p style={{ marginTop: 8, fontSize: '0.8rem', color: 'var(--text-muted)' }}>
-                    As recalibrações semanais aparecerão aqui com justificação académica,
-                    diffs de parâmetros e referências Scopus.
+                    As interações com o dashboard e recalibrações aparecem aqui.
                 </p>
             </div>
         );
@@ -48,23 +47,24 @@ export function HistoryPage() {
 
     return (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-            {data.entries.map((entry, i) => (
+            {data.events.map((entry, i) => (
                 <div className="card fade-in" key={i}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
                         <div>
-                            <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 600 }}>{entry.version}</span>
+                            <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 600 }}>#{entry.id} {entry.action}</span>
                             <span style={{ marginLeft: 12, fontSize: '0.75rem', color: 'var(--text-muted)' }}>
-                                {entry.created_at}
+                                {new Date(entry.timestamp).toLocaleString('pt-PT')}
                             </span>
                         </div>
-                        <span className={`phase-badge ${entry.risk_class === 'AUTO_APPLY' ? 'descompressao' : entry.risk_class === 'ADVISORY' ? 'plateau' : 'escalada'}`}>
-                            {entry.risk_class}
+                        <span className="phase-badge plateau">
+                            {entry.user}
                         </span>
                     </div>
-                    <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>{entry.summary}</p>
-                    <div className="chat-badge" style={{ marginTop: 12 }}>
-                        🤖 {entry.model_used}
-                    </div>
+                    {entry.details && (
+                        <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
+                            Detalhes: {entry.details}
+                        </p>
+                    )}
                 </div>
             ))}
         </div>

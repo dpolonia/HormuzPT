@@ -1,0 +1,562 @@
+
+ RUN  v1.6.1 /home/dpolonia/HormuzPT/frontend
+
+ ✓ src/components/controls/ControlPanel.test.tsx  (2 tests) 103ms
+ ❯ src/components/model/PriceDashboard.test.tsx  (1 test | 1 failed) 86ms
+   ❯ src/components/model/PriceDashboard.test.tsx > PriceDashboard > renders price projections correctly using engine output
+     → Found multiple elements with the text: /Semana/i
+
+Here are the matching elements:
+
+Ignored nodes: comments, script, style
+[36m<div[39m
+  [33mclass[39m=[32m"section-subtitle"[39m
+[36m>[39m
+  [0mValores no pico da crise (Semana 4) vs. referência ERSE[0m
+[36m</div>[39m
+
+Ignored nodes: comments, script, style
+[36m<div[39m
+  [33mclass[39m=[32m"section-subtitle"[39m
+[36m>[39m
+  [0mPreço do gasóleo eficiente e custo fiscal acumulado em cada cenário na Semana 4[0m
+[36m</div>[39m
+
+Ignored nodes: comments, script, style
+[36m<div[39m
+  [33mclass[39m=[32m"metric-value"[39m
+  [33mstyle[39m=[32m"color: var(--accent-red);"[39m
+[36m>[39m
+  [0m+[0m
+  [0m23.15[0m
+  [0m €/semana[0m
+[36m</div>[39m
+
+Ignored nodes: comments, script, style
+[36m<div[39m
+  [33mclass[39m=[32m"section-label"[39m
+[36m>[39m
+  [36m<span[39m
+    [33mclass[39m=[32m"section-icon"[39m
+  [36m>[39m
+    [0m📈[0m
+  [36m</span>[39m
+  [0mProjecção semanal[0m
+[36m</div>[39m
+
+Ignored nodes: comments, script, style
+[36m<div[39m
+  [33mclass[39m=[32m"section-subtitle"[39m
+[36m>[39m
+  [0mEvolução semanal dos preços e custo fiscal — semana 4 destacada como pico de impacto[0m
+[36m</div>[39m
+
+Ignored nodes: comments, script, style
+[36m<th>[39m
+  [0mCusto Semanal[0m
+[36m</th>[39m
+
+Ignored nodes: comments, script, style
+[36m<span[39m
+  [33mstyle[39m=[32m"margin-left: auto; font-weight: 400; font-size: 0.65rem;"[39m
+[36m>[39m
+  [0mSemanas 1–4[0m
+[36m</span>[39m
+
+Ignored nodes: comments, script, style
+[36m<span>[39m
+  [0mHorizonte: [0m
+  [0mSemanas 1–4[0m
+[36m</span>[39m
+
+(If this is intentional, then use the `*AllBy*` variant of the query (like `queryAllByText`, `getAllByText`, or `findAllByText`)).
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mstyle[39m=[32m"display: flex; flex-direction: column; gap: 24px;"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"section-group"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"section-label"[39m
+        [36m>[39m
+          [36m<span[39m
+            [33mclass[39m=[32m"section-icon"[39m
+          [36m>[39m
+            [0m📊[0m
+          [36m</span>[39m
+          [0mIndicadores-chave — Cenário [0m
+          [0mSevero[0m
+          [0m (S4)[0m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"section-subtitle"[39m
+        [36m>[39m
+          [0mValores no pico da crise (Semana 4) vs. referência ERSE[0m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"grid-4"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"card card-scenario fade-in stagger-1"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"card-title"[39m
+            [36m>[39m
+              [0mGasolina S4[0m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"metric"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"metric-value"[39m
+                [33mstyle[39m=[32m"color: var(--accent-blue);"[39m
+              [36m>[39m
+                [0m2.0425 €/l[0m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"metric-label"[39m
+              [36m>[39m
+                [0mPreço eficiente[0m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"baseline-ref"[39m
+              [36m>[39m
+                [0mBase: [0m
+                [0m1.8500 €/l[0m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"delta-badge up"[39m
+              [36m>[39m
+                [0m↑[0m
+                [0m [0m
+                [0m+10.4%[0m
+              [36m</div>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"card card-scenario fade-in stagger-2"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"card-title"[39m
+            [36m>[39m
+              [0mGasóleo S4[0m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"metric"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"metric-value"[39m
+                [33mstyle[39m=[32m"color: var(--accent-blue);"[39m
+              [36m>[39m
+                [0m2.3035 €/l[0m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"metric-label"[39m
+              [36m>[39m
+                [0mPreço eficiente[0m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"baseline-ref"[39m
+              [36m>[39m
+                [0mBase: [0m
+                [0m1.9550 €/l[0m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"delta-badge up"[39m
+              [36m>[39m
+                [0m↑[0m
+                [0m [0m
+                [0m+17.8%[0m
+              [36m</div>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"card fade-in stagger-3"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"card-title"[39m
+            [36m>[39m
+              [0mCusto Acumulado 4 Sem[0m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"metric"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"metric-value"[39m
+                [33mstyle[39m=[32m"color: var(--accent-2nd);"[39m
+              [36m>[39m
+                [0m31.2 M€[0m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"metric-label"[39m
+              [36m>[39m
+                [0mMecanismo IVA — custo fiscal[0m
+              [36m</div>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"card fade-in stagger-4"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"card-title"[39m
+            [36m>[39m
+              [0mCusto Acumulado 12 Sem[0m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"metric"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"metric-value"[39m
+                [33mstyle[39m=[32m"color: var(--accent-3rd);"[39m
+              [36m>[39m
+                [0m115.8 M€[0m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"metric-label"[39m
+              [36m>[39m
+                [0mMecanismo IVA — custo fiscal[0m
+              [36m</div>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"section-group"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"section-label"[39m
+        [36m>[39m
+          [36m<span[39m
+            [33mclass[39m=[32m"section-icon"[39m
+          [36m>[39m
+            [0m⚖️[0m
+          [36m</span>[39m
+          [0mComparação de cenários (S4)[0m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"section-subtitle"[39m
+        [36m>[39m
+          [0mPreço do gasóleo eficiente e custo fiscal acumulado em cada cenário na Semana 4[0m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"scenario-strip"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"scenario-strip-card moderado "[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"strip-label"[39m
+            [36m>[39m
+              [0mModerado[0m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"strip-value"[39m
+            [36m>[39m
+              [0m2.1486 €/l[0m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mstyle[39m=[32m"font-size: 0.7rem; color: var(--text-muted); margin-top: 4px; font-family: var(--font-mono);"[39m
+            [36m>[39m
+              [0m25.3 M€[0m
+            [36m</div>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"scenario-strip-card severo active"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"strip-label"[39m
+        ...
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/model/PriceDashboard.test.tsx > PriceDashboard > renders price projections correctly using engine output
+TestingLibraryElementError: Found multiple elements with the text: /Semana/i
+
+Here are the matching elements:
+
+Ignored nodes: comments, script, style
+[36m<div[39m
+  [33mclass[39m=[32m"section-subtitle"[39m
+[36m>[39m
+  [0mValores no pico da crise (Semana 4) vs. referência ERSE[0m
+[36m</div>[39m
+
+Ignored nodes: comments, script, style
+[36m<div[39m
+  [33mclass[39m=[32m"section-subtitle"[39m
+[36m>[39m
+  [0mPreço do gasóleo eficiente e custo fiscal acumulado em cada cenário na Semana 4[0m
+[36m</div>[39m
+
+Ignored nodes: comments, script, style
+[36m<div[39m
+  [33mclass[39m=[32m"metric-value"[39m
+  [33mstyle[39m=[32m"color: var(--accent-red);"[39m
+[36m>[39m
+  [0m+[0m
+  [0m23.15[0m
+  [0m €/semana[0m
+[36m</div>[39m
+
+Ignored nodes: comments, script, style
+[36m<div[39m
+  [33mclass[39m=[32m"section-label"[39m
+[36m>[39m
+  [36m<span[39m
+    [33mclass[39m=[32m"section-icon"[39m
+  [36m>[39m
+    [0m📈[0m
+  [36m</span>[39m
+  [0mProjecção semanal[0m
+[36m</div>[39m
+
+Ignored nodes: comments, script, style
+[36m<div[39m
+  [33mclass[39m=[32m"section-subtitle"[39m
+[36m>[39m
+  [0mEvolução semanal dos preços e custo fiscal — semana 4 destacada como pico de impacto[0m
+[36m</div>[39m
+
+Ignored nodes: comments, script, style
+[36m<th>[39m
+  [0mCusto Semanal[0m
+[36m</th>[39m
+
+Ignored nodes: comments, script, style
+[36m<span[39m
+  [33mstyle[39m=[32m"margin-left: auto; font-weight: 400; font-size: 0.65rem;"[39m
+[36m>[39m
+  [0mSemanas 1–4[0m
+[36m</span>[39m
+
+Ignored nodes: comments, script, style
+[36m<span>[39m
+  [0mHorizonte: [0m
+  [0mSemanas 1–4[0m
+[36m</span>[39m
+
+(If this is intentional, then use the `*AllBy*` variant of the query (like `queryAllByText`, `getAllByText`, or `findAllByText`)).
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mstyle[39m=[32m"display: flex; flex-direction: column; gap: 24px;"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"section-group"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"section-label"[39m
+        [36m>[39m
+          [36m<span[39m
+            [33mclass[39m=[32m"section-icon"[39m
+          [36m>[39m
+            [0m📊[0m
+          [36m</span>[39m
+          [0mIndicadores-chave — Cenário [0m
+          [0mSevero[0m
+          [0m (S4)[0m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"section-subtitle"[39m
+        [36m>[39m
+          [0mValores no pico da crise (Semana 4) vs. referência ERSE[0m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"grid-4"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"card card-scenario fade-in stagger-1"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"card-title"[39m
+            [36m>[39m
+              [0mGasolina S4[0m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"metric"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"metric-value"[39m
+                [33mstyle[39m=[32m"color: var(--accent-blue);"[39m
+              [36m>[39m
+                [0m2.0425 €/l[0m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"metric-label"[39m
+              [36m>[39m
+                [0mPreço eficiente[0m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"baseline-ref"[39m
+              [36m>[39m
+                [0mBase: [0m
+                [0m1.8500 €/l[0m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"delta-badge up"[39m
+              [36m>[39m
+                [0m↑[0m
+                [0m [0m
+                [0m+10.4%[0m
+              [36m</div>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"card card-scenario fade-in stagger-2"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"card-title"[39m
+            [36m>[39m
+              [0mGasóleo S4[0m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"metric"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"metric-value"[39m
+                [33mstyle[39m=[32m"color: var(--accent-blue);"[39m
+              [36m>[39m
+                [0m2.3035 €/l[0m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"metric-label"[39m
+              [36m>[39m
+                [0mPreço eficiente[0m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"baseline-ref"[39m
+              [36m>[39m
+                [0mBase: [0m
+                [0m1.9550 €/l[0m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"delta-badge up"[39m
+              [36m>[39m
+                [0m↑[0m
+                [0m [0m
+                [0m+17.8%[0m
+              [36m</div>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"card fade-in stagger-3"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"card-title"[39m
+            [36m>[39m
+              [0mCusto Acumulado 4 Sem[0m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"metric"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"metric-value"[39m
+                [33mstyle[39m=[32m"color: var(--accent-2nd);"[39m
+              [36m>[39m
+                [0m31.2 M€[0m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"metric-label"[39m
+              [36m>[39m
+                [0mMecanismo IVA — custo fiscal[0m
+              [36m</div>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"card fade-in stagger-4"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"card-title"[39m
+            [36m>[39m
+              [0mCusto Acumulado 12 Sem[0m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"metric"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"metric-value"[39m
+                [33mstyle[39m=[32m"color: var(--accent-3rd);"[39m
+              [36m>[39m
+                [0m115.8 M€[0m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"metric-label"[39m
+              [36m>[39m
+                [0mMecanismo IVA — custo fiscal[0m
+              [36m</div>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"section-group"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"section-label"[39m
+        [36m>[39m
+          [36m<span[39m
+            [33mclass[39m=[32m"section-icon"[39m
+          [36m>[39m
+            [0m⚖️[0m
+          [36m</span>[39m
+          [0mComparação de cenários (S4)[0m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"section-subtitle"[39m
+        [36m>[39m
+          [0mPreço do gasóleo eficiente e custo fiscal acumulado em cada cenário na Semana 4[0m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"scenario-strip"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"scenario-strip-card moderado "[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"strip-label"[39m
+            [36m>[39m
+              [0mModerado[0m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"strip-value"[39m
+            [36m>[39m
+              [0m2.1486 €/l[0m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mstyle[39m=[32m"font-size: 0.7rem; color: var(--text-muted); margin-top: 4px; font-family: var(--font-mono);"[39m
+            [36m>[39m
+              [0m25.3 M€[0m
+            [36m</div>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"scenario-strip-card severo active"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"strip-label"[39m
+        ...
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ getElementError node_modules/@testing-library/dom/dist/query-helpers.js:20:35
+ ❯ getMultipleElementsFoundError node_modules/@testing-library/dom/dist/query-helpers.js:23:10
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:55:13
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/components/model/PriceDashboard.test.tsx:20:23
+     18|         
+     19|         // Just verify it doesn't crash and renders the data table hea…
+     20|         expect(screen.getByText(/Semana/i)).toBeInTheDocument();
+       |                       ^
+     21|         expect(screen.getByText(/Gasóleo/i)).toBeInTheDocument();
+     22|         expect(screen.getByText(/Gasolina/i)).toBeInTheDocument();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  1 failed | 2 passed (3)
+   Start at  21:42:57
+   Duration  1.27s (transform 262ms, setup 115ms, collect 451ms, tests 189ms, environment 662ms, prepare 422ms)
+
