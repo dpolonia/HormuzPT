@@ -1,0 +1,40 @@
+# ─── Secrets ───
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# ─── Dependencies ───
+node_modules/
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# ─── Build ───
+frontend/dist/
+api-proxy/dist/
+recalibrator/dist/
+
+# ─── IDE ───
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ─── OS ───
+.DS_Store
+Thumbs.db
+
+# ─── GCP ───
+*.key.json
+service-account*.json
+
+# ─── Cache local ───
+.cache/
+*.log
+
+.env
+secrets.sh
+*:Zone.Identifier
