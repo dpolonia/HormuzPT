@@ -16,6 +16,7 @@ export default function App() {
     const [view, setView] = useState<View>('modelo');
     const [controls, setControls] = useState<Controls>(DEFAULT_CONTROLS);
     const [chatOpen, setChatOpen] = useState(false);
+    const [toastMsg, setToastMsg] = useState<string | null>(null);
     const { state: modelState, loading, source } = useModelState();
 
     const results = useMemo(
@@ -29,6 +30,9 @@ export default function App() {
             user: 'User',
             action: 'Mudança de Cenário',
             details: { scenario: controls.scenario }
+        }).then(() => {
+            setToastMsg('Configuração guardada no histórico.');
+            setTimeout(() => setToastMsg(null), 3000);
         }).catch(err => console.warn('History tracking failed:', err));
     }, [controls.scenario]);
 
@@ -89,6 +93,12 @@ export default function App() {
             </Shell>
 
             <ModelChat open={chatOpen} onToggle={() => setChatOpen(!chatOpen)} />
+            
+            {toastMsg && (
+                <div className="toast">
+                    <span style={{ marginRight: 8 }}>✅</span> {toastMsg}
+                </div>
+            )}
         </>
     );
 }

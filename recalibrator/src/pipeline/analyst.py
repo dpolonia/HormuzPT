@@ -16,15 +16,24 @@ async def analyse(data: dict) -> dict:
             "model_used": "baseline-math",
         }
 
-    # Use the most recent snapshot for analysis
-    state = snapshots[0]
-    changes = []
-    
-    # Simple mathematical/economic heuristic for recalibration proposal
-    base_gas = state.get("base_eff_gas", 0)
-    base_die = state.get("base_eff_die", 0)
-    
-    logger.info("Analyst: analysing state with gas=%f, die=%f", base_gas, base_die)
+    try:
+        # Use the most recent snapshot for analysis
+        state = snapshots[0]
+        changes = []
+        
+        # Simple mathematical/economic heuristic for recalibration proposal
+        base_gas = float(state.get("base_eff_gas", 0))
+        base_die = float(state.get("base_eff_die", 0))
+        
+        logger.info("Analyst: analysing state with gas=%f, die=%f", base_gas, base_die)
+    except (TypeError, ValueError, IndexError, AttributeError) as e:
+        logger.error("Analyst: Schema error processing state data: %s", str(e))
+        return {
+            "changes": [],
+            "summary": f"Data validation error: {str(e)}. Analysis aborted.",
+            "model_used": "baseline-math",
+            "error": True
+        }
     
     # If base efficient price is high enough, we propose recalibrating elasticity
     if base_gas > 1.80:

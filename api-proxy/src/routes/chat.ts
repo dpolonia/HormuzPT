@@ -1,19 +1,8 @@
 import { Router, Request, Response } from 'express';
 import { config } from '../config.js';
 import Anthropic from '@anthropic-ai/sdk';
-import fs from 'fs';
-import path from 'path';
 
 const router = Router();
-
-// Load baseline state as context
-let baselineState = '';
-try {
-    const statePath = path.join(process.cwd(), '../data/model_state_initial.json');
-    baselineState = fs.readFileSync(statePath, 'utf8');
-} catch (e) {
-    console.warn("Could not load baseline state for Chat context");
-}
 
 let anthropic: Anthropic | null = null;
 try {
@@ -45,14 +34,31 @@ router.post('/chat', async (req: Request, res: Response) => {
             });
         }
 
-        const systemPrompt = `We are an energy-system modeling dashboard for Portugal (HormuzPT).
-Your role is to explain the economic impacts of a crude oil shock based on the dashboard projections.
-Base your responses on the following baseline projection state:
+        // Fetch baseline dynamically from the recalibrator through our own proxy config
+        let baselineState = "Dados não disponíveis.";
+        try {
+            const stateRes = await fetch(`http://localhost:${config.port}/api/model-state`);
+            if (stateRes.ok) {
+                const stateData = await stateRes.json();
+                baselineState = JSON.stringify(stateData.state, null, 2);
+            }
+        } catch (err) {
+            console.warn("Chat could not fetch current model context");
+        }
+
+        const systemPrompt = `You are a Senior Energy Economist analyzing the HormuzPT projections (a Portuguese energy-system model simulating crude oil shocks).
+Your goal is to explain the economic and cascade impacts to policymakers clearly and objectively.
+Base your insights strictly on this baseline model state:
 ${baselineState}
-Always reply in concise, clear European Portuguese.`;
+
+Rules for your response:
+1. Tone: Professional, analytical, and objective.
+2. Language: Concise and clear European Portuguese (PT-PT).
+3. Structure: Use a direct, structured format (e.g., bullet points) if explaining multiple effects. Do not use conversational filler (e.g., "Olá", "Aqui está a análise", "Espero ter ajudado").
+4. Constraints: Only discuss data derived from the provided model state and the established parameters of the HormuzPT dashboard. If asked about external topics, politely decline and refocus on the energy model.`;
 
         const message = await anthropic.messages.create({
-            model: 'claude-3-5-sonnet-20241022',
+            model: 'claude-3-haiku-20240307',
             max_tokens: 1024,
             temperature: 0.3,
             system: systemPrompt,

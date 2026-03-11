@@ -66,7 +66,8 @@ async def recalibrate(dry_run: bool = Query(False)):
         return result
     except Exception as e:
         logger.exception("Recalibration failed")
-        return {"status": "error", "detail": str(e)}
+        from fastapi import HTTPException
+        raise HTTPException(status_code=500, detail=f"Recalibration failed: {str(e)}")
 
 
 @app.get("/model-state")

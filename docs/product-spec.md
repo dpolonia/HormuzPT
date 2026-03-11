@@ -12,7 +12,8 @@ The platform is composed of three main services:
 
 2. **API proxy**
    - Mediates requests between the frontend and downstream services.
-   - Handles routing, orchestration, and service integration.
+   - Handles LLM integration (`/api/chat`) via Anthropic Claude.
+   - Manages local persistence for user sessions (`/api/history`) via SQLite.
    - Runs locally on port `8081` in development.
 
 3. **Recalibrator**
@@ -24,7 +25,7 @@ Local development is driven by Docker Compose. A local `.env` file is used for d
 
 ## Configuration model
 - `.env.example` provides placeholders only.
-- `.env` is local-only.
+- `.env` is local-only. Must contain `ANTHROPIC_API_KEY` for chat functionality.
 - Production secrets should be handled through managed secret infrastructure rather than repository files.
 
 ## Validation model

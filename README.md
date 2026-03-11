@@ -31,18 +31,25 @@ docker compose down
 ```
 
 ### Developer Handoff
-For architecture specifics, current stubs, and prioritized next steps for incoming developers, please read `docs/developer-handoff.md`.
+For architecture specifics, current stubs, and prioritized next steps for incoming developers, please read `docs/developer-handoff.md` and `docs/product-spec.md`.
 
-### Regression Testing
+### Testing and QA
 A lightweight test suite protects critical API boundaries and model baseline calculations. Keep this passing before committing:
 ```bash
 bash scripts/test_regression.sh
 ```
 
+Frontend UI components use **Vitest**. To run the component unit tests locally:
+```bash
+cd frontend
+npm install # Ensure local dependencies are synced
+npm run test
+```
+
 ### Expected services
-- Frontend: `http://localhost:8080`
-- API proxy: `http://localhost:8081`
-- Recalibrator: `http://localhost:8082`
+- Frontend (Vite/React): `http://localhost:8080`
+- API proxy (Node/Express): `http://localhost:8081` — required: `ANTHROPIC_API_KEY` in `.env` for LLM, uses `better-sqlite3` for local history persistence.
+- Recalibrator (Python/FastAPI): `http://localhost:8082`
 
 ## Repository layout
 
