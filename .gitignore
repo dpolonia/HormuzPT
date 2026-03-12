@@ -32,3 +32,5 @@ firebase-debug.log
 # Tooling
 .antigravity/
 old_Claude/
+
+*:Zone.Identifier
