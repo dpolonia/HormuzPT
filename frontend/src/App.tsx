@@ -9,8 +9,9 @@ import { PriceDashboard } from './components/model/PriceDashboard';
 import { MacroPanel } from './components/context/MacroPanel';
 import { HistoryPage } from './components/history/HistoryPage';
 import { ModelChat } from './components/chat/ModelChat';
+import { CostDashboard } from './components/history/CostDashboard';
 
-type View = 'modelo' | 'contexto' | 'historico';
+type View = 'modelo' | 'contexto' | 'historico' | 'custos';
 
 export default function App() {
     const [view, setView] = useState<View>('modelo');
@@ -88,6 +89,12 @@ export default function App() {
                         <div className="page-body">
                             <HistoryPage />
                         </div>
+                    </div>
+                )}
+
+                {view === 'custos' && (
+                    <div className="fade-in">
+                        <CostDashboard />
                     </div>
                 )}
             </Shell>

@@ -18,6 +18,7 @@ import historyRouter from './routes/history.js';
 import chatRouter from './routes/chat.js';
 import refreshRouter from './routes/refresh.js';
 import metaRouter from './routes/meta.js';
+import statsRouter from './routes/stats.js';
 
 const app = express();
 
@@ -42,6 +43,7 @@ app.use('/api', historyRouter);
 app.use('/api', chatRouter);
 app.use('/api', refreshRouter);
 app.use('/api', metaRouter);
+app.use('/api/stats', statsRouter);
 
 // Start server
 app.listen(config.port, '0.0.0.0', () => {

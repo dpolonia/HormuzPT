@@ -1,6 +1,7 @@
 import Anthropic from '@anthropic-ai/sdk';
 import OpenAI from 'openai';
 import { VertexAI } from '@google-cloud/vertexai';
+import { calculateCostUsd } from './pricing.js';
 
 export type Tier = 'baixo' | 'moderado' | 'intenso';
 export type Provider = 'openai' | 'anthropic' | 'vertex';
@@ -24,17 +25,19 @@ const MODEL_MAP: Record<Provider, Record<Tier, string>> = {
 };
 
 
+export interface ModelMeta {
+    provider: Provider;
+    model: string;
+    tier: Tier;
+}
 
 export interface LLMResponse {
     answer: string;
-    model_meta: {
-        provider: Provider;
-        model: string;
-        tier: Tier;
-    };
+    model_meta: ModelMeta;
     tokens_in: number;
     tokens_out: number;
-    reason?: string;
+    cost_usd: number;
+    reason: string;
 }
 
 export class LLMRouter {
@@ -368,6 +371,7 @@ export class LLMRouter {
     }
 
     private async executeCall(provider: Provider, tier: Tier, model: string, prompt: string, reason: string): Promise<LLMResponse> {
+        console.log(`Executing ${provider} call to model ${model} (tier: ${tier})...`);
         if (provider === 'openai' && this.openai) {
             const response = await this.openai.chat.completions.create({
                 model,
@@ -383,6 +387,7 @@ export class LLMRouter {
                 },
                 tokens_in: response.usage?.prompt_tokens || 0,
                 tokens_out: response.usage?.completion_tokens || 0,
+                cost_usd: calculateCostUsd('openai', tier, response.usage?.prompt_tokens || 0, response.usage?.completion_tokens || 0),
                 reason
             };
         }
@@ -404,7 +409,8 @@ export class LLMRouter {
                     tier
                 },
                 tokens_in: response.usage.input_tokens || 0,
-                tokens_out: response.usage.output_tokens || 0,
+                tokens_out: response.usage.output_tokens,
+                cost_usd: calculateCostUsd('anthropic', tier, response.usage.input_tokens, response.usage.output_tokens),
                 reason
             };
         }
@@ -423,6 +429,7 @@ export class LLMRouter {
                 },
                 tokens_in: response.usageMetadata?.promptTokenCount || 0,
                 tokens_out: response.usageMetadata?.candidatesTokenCount || 0,
+                cost_usd: calculateCostUsd('vertex', tier, response.usageMetadata?.promptTokenCount || 0, response.usageMetadata?.candidatesTokenCount || 0),
                 reason
             };
         }

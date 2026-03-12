@@ -1,12 +1,19 @@
 import { Router, Request, Response } from 'express';
 import { config } from '../config.js';
 import { LLMRouter } from '../llm/router.js';
+import Database from 'better-sqlite3';
+import path from 'path';
+
+// Connect implicitly to the same history database
+const dbDir = path.join(process.cwd(), 'data');
+const db = new Database(path.join(dbDir, 'history.sqlite'));
 
 const router = Router();
 const llmRouter = new LLMRouter();
 
 // POST /api/chat — Q&A with LLM (Moderado tier)
 router.post('/chat', async (req: Request, res: Response) => {
+    console.log(`[chat] Incoming request from ${req.ip} with body:`, req.body);
     try {
         const { question } = req.body as { question?: string };
         if (!question) {
@@ -17,7 +24,7 @@ router.post('/chat', async (req: Request, res: Response) => {
         // Fetch baseline dynamically from the recalibrator through our own proxy config
         let baselineState = "Dados não disponíveis.";
         try {
-            const stateRes = await fetch(`http://localhost:${config.port}/api/model-state`);
+            const stateRes = await fetch(`http://127.0.0.1:${config.port}/api/model-state`);
             if (stateRes.ok) {
                 const stateData = await stateRes.json();
                 baselineState = JSON.stringify(stateData.state, null, 2);
@@ -39,15 +46,31 @@ Rules for your response:
 
         const fullPrompt = `${systemPrompt}\n\nUser Question:\n${question}`;
         
-        // Frontend default routing rule: moderado
+        console.log("Chat route accepted prompt. Resolving LLM route...");
         const result = await llmRouter.chat(fullPrompt, 'frontend_qa');
+        console.log("LLM route resolved and returned:", result.model_meta);
+        // Log the usage to History DB
+        try {
+            const stmt = db.prepare('INSERT INTO history_events (timestamp, user, action, details) VALUES (?, ?, ?, ?)');
+            const timestamp = new Date().toISOString();
+            const details = {
+                question,
+                model_meta: result.model_meta,
+                tokens_in: result.tokens_in,
+                tokens_out: result.tokens_out,
+                cost_usd: result.cost_usd
+            };
+            stmt.run(timestamp, 'system', 'qna', JSON.stringify(details));
+        } catch (dbErr) {
+            console.error("Failed to log Q&A interaction to SQLite:", dbErr);
+        }
 
         res.json({
             answer: result.answer,
             model_meta: result.model_meta,
             tokens_in: result.tokens_in,
             tokens_out: result.tokens_out,
-            cost_eur: 0, // Simplified for now
+            cost_usd: result.cost_usd,
             cached: false,
         });
     } catch (err) {

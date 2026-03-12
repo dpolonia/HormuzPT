@@ -10,6 +10,7 @@ const NAV_ITEMS = [
     { key: 'modelo', icon: '📊', label: 'Modelo' },
     { key: 'contexto', icon: '🌍', label: 'Contexto' },
     { key: 'historico', icon: '📝', label: 'Histórico' },
+    { key: 'custos', icon: '💰', label: 'Custos API' },
 ];
 
 export function Shell({ view, onViewChange, children }: ShellProps) {
