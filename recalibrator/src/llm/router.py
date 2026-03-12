@@ -108,14 +108,8 @@ def apply_cost_latency_policy(current_tier: str, env: str, task_type: str, user_
     return current_tier
 
 def get_provider_priority_for_tier(tier: str) -> list[str]:
-    if tier == "intenso":
-        return ["openai", "anthropic", "vertex"]
-    elif tier == "moderado":
-        return ["openai", "anthropic", "vertex"]
-    elif tier == "baixo":
-        return ["openai", "anthropic", "vertex"]
-    else:
-        return ["openai", "anthropic", "vertex"]
+    # Prefer Vertex-first for native Python ML integration
+    return ["vertex", "openai", "anthropic"]
 
 def get_model_for(provider: str, tier: str) -> str:
     return MODEL_MAP[provider][tier]
@@ -125,7 +119,7 @@ def provider_is_available(provider: str) -> bool:
         return True
     if provider == "anthropic" and os.getenv("ANTHROPIC_API_KEY") and os.getenv("ANTHROPIC_API_KEY") != "stub":
         return True
-    if provider == "vertex" and os.getenv("VERTEX_AI_API_KEY"):
+    if provider == "vertex" and (os.getenv("VERTEX_AI_PROJECT_ID") or os.getenv("GOOGLE_APPLICATION_CREDENTIALS")):
         return True
     return False
 
@@ -261,12 +255,15 @@ def resolve_frontend_qa_route(env: str, complexity: str) -> dict:
 
     # never silently exceed Moderado unless explicit escalation
     if route["tier"] == "intenso":
-        route = {
-            "tier": "moderado",
-            "provider": "openai",
-            "model": "gpt-5.4-2026-03-05",
-            "reason": "frontend_default_capped_to_moderado"
-        }
+        route = resolve_llm_route(
+            env=env,
+            task_type="frontend_qa",
+            complexity=complexity,
+            user_facing=True,
+            latency_sensitive=True,
+            explicit_tier="moderado"
+        )
+        route["reason"] = "frontend_default_capped_to_moderado"
 
     return route
 

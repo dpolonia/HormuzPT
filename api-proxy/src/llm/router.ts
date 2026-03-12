@@ -1,6 +1,6 @@
 import Anthropic from '@anthropic-ai/sdk';
 import OpenAI from 'openai';
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import { VertexAI } from '@google-cloud/vertexai';
 
 export type Tier = 'baixo' | 'moderado' | 'intenso';
 export type Provider = 'openai' | 'anthropic' | 'vertex';
@@ -40,7 +40,7 @@ export interface LLMResponse {
 export class LLMRouter {
     private openai: OpenAI | null = null;
     private anthropic: Anthropic | null = null;
-    private vertex: GoogleGenerativeAI | null = null;
+    private vertex: VertexAI | null = null;
 
     constructor() {
         if (process.env.OPENAI_API_KEY) {
@@ -49,8 +49,8 @@ export class LLMRouter {
         if (process.env.ANTHROPIC_API_KEY && process.env.ANTHROPIC_API_KEY !== 'stub') {
             this.anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
         }
-        if (process.env.VERTEX_AI_API_KEY) {
-            this.vertex = new GoogleGenerativeAI(process.env.VERTEX_AI_API_KEY);
+        if (process.env.VERTEX_AI_PROJECT_ID && process.env.VERTEX_AI_LOCATION) {
+            this.vertex = new VertexAI({ project: process.env.VERTEX_AI_PROJECT_ID, location: process.env.VERTEX_AI_LOCATION });
         }
     }
 
@@ -185,7 +185,11 @@ export class LLMRouter {
     private providerIsAvailable(provider: Provider): boolean {
         if (provider === 'openai' && this.openai) return true;
         if (provider === 'anthropic' && this.anthropic) return true;
-        if (provider === 'vertex' && this.vertex) return true;
+        if (provider === 'vertex') {
+            if (process.env.GOOGLE_APPLICATION_CREDENTIALS) return true;
+            if (process.env.VERTEX_AI_PROJECT_ID) return true;
+            return false;
+        }
         return false;
     }
 
@@ -325,12 +329,15 @@ export class LLMRouter {
 
         // never silently exceed Moderado unless explicit escalation
         if (route.tier === 'intenso') {
-            route = {
-                tier: 'moderado',
-                provider: 'openai',
-                model: 'gpt-5.4-2026-03-05',
-                reason: 'frontend_default_capped_to_moderado'
-            };
+            route = this.resolveLlmRoute(
+                env,
+                'frontend_qa',
+                complexity,
+                true,
+                true,
+                'moderado'
+            );
+            route.reason = 'frontend_default_capped_to_moderado';
         }
 
         return route;
@@ -406,15 +413,16 @@ export class LLMRouter {
             const vertexModel = this.vertex.getGenerativeModel({ model });
             const result = await vertexModel.generateContent(prompt);
             const response = await result.response;
+            const text = response.candidates && response.candidates[0].content.parts[0].text ? response.candidates[0].content.parts[0].text : '';
             return {
-                answer: response.text(),
+                answer: text,
                 model_meta: {
                     model,
                     provider,
                     tier
                 },
-                tokens_in: 0,
-                tokens_out: 0,
+                tokens_in: response.usageMetadata?.promptTokenCount || 0,
+                tokens_out: response.usageMetadata?.candidatesTokenCount || 0,
                 reason
             };
         }
