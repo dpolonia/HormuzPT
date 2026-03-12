@@ -5,6 +5,7 @@ interface ChatMessage {
     role: 'user' | 'assistant';
     content: string;
     model?: string;
+    provider?: string;
     tier?: string;
     tokens_in?: number;
     tokens_out?: number;
@@ -13,8 +14,11 @@ interface ChatMessage {
 
 interface ChatResponse {
     answer: string;
-    model: string;
-    tier: string;
+    model_meta: {
+        provider: string;
+        model: string;
+        tier: string;
+    };
     tokens_in: number;
     tokens_out: number;
     cost_eur: number;
@@ -43,8 +47,9 @@ export function ModelChat({ open, onToggle }: ModelChatProps) {
             setMessages(prev => [...prev, {
                 role: 'assistant',
                 content: res.answer,
-                model: res.model,
-                tier: res.tier,
+                model: res.model_meta.model,
+                provider: res.model_meta.provider,
+                tier: res.model_meta.tier,
                 tokens_in: res.tokens_in,
                 tokens_out: res.tokens_out,
                 cost_eur: res.cost_eur,
@@ -92,7 +97,7 @@ export function ModelChat({ open, onToggle }: ModelChatProps) {
                             <div>{msg.content}</div>
                             {msg.model && (
                                 <div className="chat-badge">
-                                    🤖 {msg.model} · {msg.tier}
+                                    🤖 {msg.provider?.toUpperCase() || 'LLM'} · {msg.model} · {msg.tier}
                                     {msg.tokens_in !== undefined && (
                                         <span> · {msg.tokens_in} in · {msg.tokens_out} out</span>
                                     )}

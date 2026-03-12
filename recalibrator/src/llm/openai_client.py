@@ -1,23 +1,24 @@
-"""OpenAI LLM client stub."""
+import os
+from typing import Optional
+import openai
 
-from ..config import settings
+class OpenAIClient:
+    def __init__(self):
+        api_key = os.getenv("OPENAI_API_KEY")
+        if not api_key or api_key == "stub":
+            raise ValueError("OPENAI_API_KEY required for OpenAIClient")
+        self.client = openai.OpenAI(api_key=api_key)
 
-
-async def call_openai(
-    model: str,
-    system_prompt: str,
-    user_prompt: str,
-    max_tokens: int = 4096,
-) -> dict:
-    """Call OpenAI API. Stub — returns placeholder."""
-    # TODO: Implement with openai SDK
-    # import openai
-    # client = openai.OpenAI(api_key=settings.openai_api_key)
-    return {
-        "provider": "openai",
-        "model": model,
-        "content": f"[Stub] OpenAI {model} response pending implementation",
-        "tokens_in": 0,
-        "tokens_out": 0,
-        "cost_usd": 0.0,
-    }
+    def analyze(self, prompt: str, system_prompt: Optional[str] = None, model_name: str = "gpt-4o-mini", max_tokens: int = 1000) -> str:
+        messages = []
+        if system_prompt:
+            messages.append({"role": "system", "content": system_prompt})
+        messages.append({"role": "user", "content": prompt})
+        
+        response = self.client.chat.completions.create(
+            model=model_name,
+            max_tokens=max_tokens,
+            temperature=0.2,
+            messages=messages
+        )
+        return response.choices[0].message.content or ""
