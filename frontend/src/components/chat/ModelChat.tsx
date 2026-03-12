@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import { apiPost } from '../../api/client';
 
 interface ChatMessage {
@@ -94,7 +96,11 @@ export function ModelChat({ open, onToggle }: ModelChatProps) {
                     )}
                     {messages.map((msg, i) => (
                         <div key={i} className={`chat-msg ${msg.role}`}>
-                            <div>{msg.content}</div>
+                            <div className="markdown-body">
+                                <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                                    {msg.content}
+                                </ReactMarkdown>
+                            </div>
                             {msg.model && (
                                 <div className="chat-badge">
                                     🤖 {msg.provider?.toUpperCase() || 'LLM'} · {msg.model} · {msg.tier}

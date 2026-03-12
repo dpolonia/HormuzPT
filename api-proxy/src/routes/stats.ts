@@ -1,6 +1,7 @@
 import { Router, Request, Response } from 'express';
 import Database from 'better-sqlite3';
 import path from 'path';
+import { logAudit } from '../utils/logger.js';
 
 const router = Router();
 
@@ -41,6 +42,16 @@ router.get('/cost', (req: Request, res: Response) => {
             total_cost_usd: Math.round(totalCostUsd * 1000) / 1000,
             max_limit_usd: maxLimitUsd,
             percentage_used: Math.round((totalCostUsd / maxLimitUsd) * 100),
+        });
+
+        // 11.3: Private Audit Log (File structure)
+        logAudit({
+            ip: req.ip || '0.0.0.0',
+            route: '/api/stats/cost',
+            method: 'GET',
+            action: 'View Dashboard Costs',
+            userAgent: req.get('user-agent') || 'unknown',
+            status_code: 200
         });
     } catch (err) {
         console.error("Failed to fetch cost statistics:", err);

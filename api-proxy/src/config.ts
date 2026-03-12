@@ -22,4 +22,14 @@ export const config = {
 
     // Recalibrator URL (for internal routing)
     recalibratorUrl: process.env.RECALIBRATOR_URL || 'http://recalibrator:8082',
+
+    // Email / Audit
+    smtpHost: process.env.SMTP_HOST || '',
+    smtpPort: parseInt(process.env.SMTP_PORT || '587', 10),
+    smtpUser: process.env.SMTP_USER || '',
+    smtpPassword: process.env.SMTP_PASSWORD || '',
+    smtpFrom: process.env.SMTP_FROM || 'hormuzpt@localhost',
+    auditEmailTo: process.env.AUDIT_EMAIL_TO || 'dpolonia@gmail.com',
+    auditLogDir: process.env.AUDIT_LOG_DIR || '/var/log/hormuzpt/private',
+    auditEmailTimezone: process.env.AUDIT_EMAIL_TIMEZONE || 'Europe/Lisbon',
 } as const;

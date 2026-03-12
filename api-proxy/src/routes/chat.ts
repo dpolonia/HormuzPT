@@ -1,6 +1,7 @@
 import { Router, Request, Response } from 'express';
 import { config } from '../config.js';
 import { LLMRouter } from '../llm/router.js';
+import { logAudit } from '../utils/logger.js';
 import Database from 'better-sqlite3';
 import path from 'path';
 
@@ -65,6 +66,23 @@ Rules for your response:
             console.error("Failed to log Q&A interaction to SQLite:", dbErr);
         }
 
+        // 11.3: Private Audit Log (File structure)
+        logAudit({
+            ip: req.ip || '0.0.0.0',
+            route: '/api/chat',
+            method: 'POST',
+            action: 'Generate Scenarios',
+            userAgent: req.get('user-agent') || 'unknown',
+            provider: result.model_meta.provider,
+            model: result.model_meta.model,
+            tier: result.model_meta.tier,
+            tokens_in: result.tokens_in,
+            tokens_out: result.tokens_out,
+            cost_usd: result.cost_usd,
+            status_code: 200,
+            chat_content: `Q: ${question}\nA: ${result.answer}`
+        });
+
         res.json({
             answer: result.answer,
             model_meta: result.model_meta,
@@ -76,6 +94,15 @@ Rules for your response:
     } catch (err) {
         console.error("Chat error:", err);
         res.status(500).json({ error: 'Chat failed', detail: String(err) });
+        
+        logAudit({
+            ip: req.ip || '0.0.0.0',
+            route: '/api/chat',
+            method: 'POST',
+            action: 'Generate Scenarios (Failed)',
+            userAgent: req.get('user-agent') || 'unknown',
+            status_code: 500
+        });
     }
 });
 

@@ -34,3 +34,7 @@ firebase-debug.log
 old_Claude/
 
 *:Zone.Identifier
+
+# 11.3: Private Audit Logs
+/var/log/hormuzpt/
+/api-proxy/logs/

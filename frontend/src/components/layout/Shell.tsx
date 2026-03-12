@@ -34,11 +34,19 @@ export function Shell({ view, onViewChange, children }: ShellProps) {
                     ))}
                 </nav>
                 <div className="sidebar-footer">
-                    Exercício de cenários com pressupostos explícitos e fórmulas auditáveis.
-                    Não constitui previsão de mercado nem aconselhamento financeiro.
+                    <p style={{ marginBottom: '8px' }}>
+                        <strong>Aviso de Monitorização:</strong> Para fins de auditoria e melhoria do sistema, os seus acessos, ações e conversas com o modelo <strong>são registados</strong> confidencialmente.
+                    </p>
+                    <p>
+                        Exercício de cenários com pressupostos explícitos e fórmulas auditáveis.
+                        Não constitui previsão de mercado nem aconselhamento financeiro.
+                    </p>
                 </div>
             </aside>
             <main className="main-content">
+                <div className="dev-banner">
+                    <strong>⚠️ EM DESENVOLVIMENTO:</strong> O sistema encontra-se em fase experimental. Os resultados apresentados são estritamente exploratórios, dependem de pressupostos rígidos não validados empiricamente para a atual conjuntura, e <strong>NÃO</strong> devem ser usados como base exclusiva para decisões. Exigem validação humana especializada.
+                </div>
                 {children}
             </main>
         </div>

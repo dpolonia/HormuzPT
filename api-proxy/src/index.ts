@@ -3,6 +3,7 @@ import express from 'express';
 import { corsMiddleware } from './middleware/cors.js';
 import { rateLimitMiddleware } from './middleware/rateLimit.js';
 import { config } from './config.js';
+import { startAuditScheduler } from './jobs/scheduler.js';
 
 // Route modules
 import healthRouter from './routes/health.js';
@@ -44,6 +45,9 @@ app.use('/api', chatRouter);
 app.use('/api', refreshRouter);
 app.use('/api', metaRouter);
 app.use('/api/stats', statsRouter);
+
+// Start daily audit cron jobs (Sprint 11)
+startAuditScheduler();
 
 // Start server
 app.listen(config.port, '0.0.0.0', () => {

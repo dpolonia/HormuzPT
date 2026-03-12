@@ -12,6 +12,8 @@ services:
       - "8081:8081"
     env_file:
       - .env
+    volumes:
+      - hormuzpt_logs:/var/log/hormuzpt/private
 
   recalibrator:
     build: ./recalibrator
@@ -19,3 +21,7 @@ services:
       - "8082:8082"
     env_file:
       - .env
+
+volumes:
+  hormuzpt_logs:
+    external: false

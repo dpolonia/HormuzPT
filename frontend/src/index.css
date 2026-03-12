@@ -901,3 +901,64 @@ body {
   .nav-item { justify-content: center; padding: 10px; }
   .nav-item .nav-icon { width: auto; }
 }
+
+/* ─── Sprint 11: Production-like UI Warnings ─── */
+
+.dev-banner {
+  background-color: var(--accent-red);
+  color: white;
+  padding: 12px 24px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-align: center;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  z-index: 50;
+  position: relative;
+  letter-spacing: 0.02em;
+}
+
+.dev-banner strong {
+  font-weight: 800;
+  letter-spacing: 0.05em;
+}
+
+/* ─── Markdown Rendering within Chat ─── */
+
+.markdown-body {
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: inherit;
+}
+
+.markdown-body p {
+  margin-bottom: 8px;
+}
+
+.markdown-body p:last-child {
+  margin-bottom: 0;
+}
+
+.markdown-body ul, .markdown-body ol {
+  margin: 8px 0 8px 16px;
+  padding-left: 8px;
+}
+
+.markdown-body li {
+  margin-bottom: 4px;
+}
+
+.markdown-body strong {
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.markdown-body h1, .markdown-body h2, .markdown-body h3, .markdown-body h4 {
+  margin-top: 12px;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.markdown-body h3 {
+  font-size: 1rem;
+}
