@@ -1,29 +1,7 @@
 import { Router, Request, Response } from 'express';
-import Database from 'better-sqlite3';
-import path from 'path';
-import fs from 'fs';
+import db from '../services/db.js';
 
 const router = Router();
-
-// Ensure db directory exists
-const dbDir = path.join(process.cwd(), 'data');
-if (!fs.existsSync(dbDir)) {
-    fs.mkdirSync(dbDir, { recursive: true });
-}
-
-// Initialize SQLite Database
-const db = new Database(path.join(dbDir, 'history.sqlite'));
-
-// Create history table if it doesn't exist
-db.exec(`
-  CREATE TABLE IF NOT EXISTS history_events (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    timestamp TEXT NOT NULL,
-    user TEXT NOT NULL,
-    action TEXT NOT NULL,
-    details TEXT
-  )
-`);
 
 type HistoryEvent = {
     id: number;

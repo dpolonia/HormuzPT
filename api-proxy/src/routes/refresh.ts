@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { clearCache } from '../middleware/cache.js';
+import { clearChatCache } from '../services/chatCache.js';
 
 const router = Router();
 
@@ -7,9 +8,10 @@ const router = Router();
 router.post('/refresh', async (_req, res) => {
     try {
         clearCache();
+        clearChatCache();
         res.json({
             status: 'ok',
-            message: 'Cache cleared, data will be re-fetched on next request',
+            message: 'Cache cleared (including chat), data will be re-fetched on next request',
             refreshed_at: new Date().toISOString(),
         });
     } catch (err) {

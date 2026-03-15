@@ -14,6 +14,7 @@ services:
       - .env
     volumes:
       - hormuzpt_logs:/var/log/hormuzpt/private
+      - ./data/model_state_initial.json:/app/data/model_state_initial.json:ro
 
   recalibrator:
     build: ./recalibrator

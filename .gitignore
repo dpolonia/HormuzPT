@@ -3,11 +3,11 @@
 .env.*
 !.env.example
 
-# Secrets
-secrets.sh
+# Secrets / credentials
 *.pem
 *.key
-*.json
+*-key.json
+service-account*.json
 
 # OS / filesystem noise
 .DS_Store
@@ -38,3 +38,5 @@ old_Claude/
 # 11.3: Private Audit Logs
 /var/log/hormuzpt/
 /api-proxy/logs/
+.firebase/
+hormuzpt_v0.1.zip

@@ -11,7 +11,7 @@ interface ChatMessage {
     tier?: string;
     tokens_in?: number;
     tokens_out?: number;
-    cost_eur?: number;
+    cost_usd?: number;
 }
 
 interface ChatResponse {
@@ -23,7 +23,7 @@ interface ChatResponse {
     };
     tokens_in: number;
     tokens_out: number;
-    cost_eur: number;
+    cost_usd: number;
 }
 
 interface ModelChatProps {
@@ -54,7 +54,7 @@ export function ModelChat({ open, onToggle }: ModelChatProps) {
                 tier: res.model_meta.tier,
                 tokens_in: res.tokens_in,
                 tokens_out: res.tokens_out,
-                cost_eur: res.cost_eur,
+                cost_usd: res.cost_usd,
             }]);
         } catch {
             setMessages(prev => [...prev, {
@@ -107,8 +107,8 @@ export function ModelChat({ open, onToggle }: ModelChatProps) {
                                     {msg.tokens_in !== undefined && (
                                         <span> · {msg.tokens_in} in · {msg.tokens_out} out</span>
                                     )}
-                                    {msg.cost_eur !== undefined && msg.cost_eur > 0 && (
-                                        <span> · ~€{msg.cost_eur.toFixed(4)}</span>
+                                    {msg.cost_usd !== undefined && msg.cost_usd > 0 && (
+                                        <span> · ~${msg.cost_usd.toFixed(4)}</span>
                                     )}
                                 </div>
                             )}

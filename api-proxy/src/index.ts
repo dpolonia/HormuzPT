@@ -1,4 +1,10 @@
-import 'dotenv/config';
+import dotenv from 'dotenv';
+import path from 'path';
+
+// Load .env from repo root (parent of api-proxy/) or current dir.
+// override: true ensures .env values take precedence over stale shell exports.
+dotenv.config({ path: path.resolve(process.cwd(), '..', '.env'), override: true });
+dotenv.config({ path: path.resolve(process.cwd(), '.env'), override: true });
 import express from 'express';
 import { corsMiddleware } from './middleware/cors.js';
 import { rateLimitMiddleware } from './middleware/rateLimit.js';
@@ -30,6 +36,12 @@ app.use(rateLimitMiddleware(120, 60));
 
 // Health (no /api prefix)
 app.use('/', healthRouter);
+
+// Health routes
+// Exposed both at root (/health) and via API namespace (/api/health)
+// This allows Firebase Hosting rewrites (/api/**) to access the health endpoint
+app.use('/', healthRouter);
+app.use('/api', healthRouter);
 
 // API routes
 app.use('/api', contextRouter);

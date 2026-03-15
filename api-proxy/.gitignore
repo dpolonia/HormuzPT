@@ -1,0 +1,6 @@
+node_modules/
+dist/
+data/*.sqlite
+data/*.sqlite-journal
+data/model_state_initial.json
+!data/.gitkeep

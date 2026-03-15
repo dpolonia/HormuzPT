@@ -44,17 +44,34 @@ export class LLMRouter {
     private openai: OpenAI | null = null;
     private anthropic: Anthropic | null = null;
     private vertex: VertexAI | null = null;
+    private initialized = false;
 
-    constructor() {
+    /**
+     * Lazy-initialize LLM clients on first use.
+     * This ensures env vars set by dotenv (which runs after ESM imports)
+     * are available when clients are constructed.
+     */
+    private ensureInitialized(): void {
+        if (this.initialized) return;
+        this.initialized = true;
+
         if (process.env.OPENAI_API_KEY) {
             this.openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
         }
         if (process.env.ANTHROPIC_API_KEY && process.env.ANTHROPIC_API_KEY !== 'stub') {
             this.anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
         }
-        if (process.env.VERTEX_AI_PROJECT_ID && process.env.VERTEX_AI_LOCATION) {
-            this.vertex = new VertexAI({ project: process.env.VERTEX_AI_PROJECT_ID, location: process.env.VERTEX_AI_LOCATION });
+        const vertexProject = process.env.GOOGLE_CLOUD_PROJECT || process.env.VERTEX_AI_PROJECT_ID;
+        if (vertexProject && process.env.VERTEX_AI_LOCATION) {
+            this.vertex = new VertexAI({ project: vertexProject, location: process.env.VERTEX_AI_LOCATION });
         }
+
+        const active = [
+            this.openai && 'openai',
+            this.anthropic && 'anthropic',
+            this.vertex && 'vertex',
+        ].filter(Boolean);
+        console.log(`[LLMRouter] Initialized providers: ${active.length > 0 ? active.join(', ') : 'none'}`);
     }
 
     private inferTierFromModel(model: string): Tier {
@@ -186,11 +203,11 @@ export class LLMRouter {
     }
 
     private providerIsAvailable(provider: Provider): boolean {
+        this.ensureInitialized();
         if (provider === 'openai' && this.openai) return true;
         if (provider === 'anthropic' && this.anthropic) return true;
         if (provider === 'vertex') {
-            if (process.env.GOOGLE_APPLICATION_CREDENTIALS) return true;
-            if (process.env.VERTEX_AI_PROJECT_ID) return true;
+            if (this.vertex) return true;
             return false;
         }
         return false;
@@ -371,6 +388,7 @@ export class LLMRouter {
     }
 
     private async executeCall(provider: Provider, tier: Tier, model: string, prompt: string, reason: string): Promise<LLMResponse> {
+        this.ensureInitialized();
         console.log(`Executing ${provider} call to model ${model} (tier: ${tier})...`);
         if (provider === 'openai' && this.openai) {
             const response = await this.openai.chat.completions.create({

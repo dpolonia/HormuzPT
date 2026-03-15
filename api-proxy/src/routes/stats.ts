@@ -1,13 +1,8 @@
 import { Router, Request, Response } from 'express';
-import Database from 'better-sqlite3';
-import path from 'path';
 import { logAudit } from '../utils/logger.js';
+import db from '../services/db.js';
 
 const router = Router();
-
-// Ensure connection to the shared history database
-const dbDir = path.join(process.cwd(), 'data');
-const db = new Database(path.join(dbDir, 'history.sqlite'));
 
 // GET /api/stats/cost — Calculate 7-day rolling cost vs Limit
 router.get('/cost', (req: Request, res: Response) => {
