@@ -8,8 +8,9 @@ interface ShellProps {
 
 const NAV_ITEMS = [
     { key: 'modelo', icon: '📊', label: 'Modelo' },
+    { key: 'cenarios', icon: '🔬', label: 'Cenarios Macro' },
     { key: 'contexto', icon: '🌍', label: 'Contexto' },
-    { key: 'historico', icon: '📝', label: 'Histórico' },
+    { key: 'historico', icon: '📝', label: 'Historico' },
     { key: 'custos', icon: '💰', label: 'Custos API' },
 ];
 

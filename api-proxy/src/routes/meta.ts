@@ -1,21 +1,30 @@
 import { Router } from 'express';
+import { getAllProviderStatuses } from '../utils/resilientFetch.js';
 
 const router = Router();
 
-// GET /api/meta — Timestamps and status for all data sources
+// GET /api/meta — Dynamic provider status and timestamps
 router.get('/meta', (_req, res) => {
+    const statuses = getAllProviderStatuses();
+
+    // Build a keyed map from provider name → status
+    const sources: Record<string, any> = {};
+    for (const s of statuses) {
+        sources[s.name] = {
+            status: s.status,
+            lastSuccess: s.lastSuccess,
+            lastError: s.lastError,
+            stale: s.stale,
+        };
+    }
+
     res.json({
         service: 'hormuzpt-api-proxy',
-        sources: {
-            ine: { status: 'stub', last_fetched: null },
-            bpstat: { status: 'stub', last_fetched: null },
-            ecb: { status: 'stub', last_fetched: null },
-            eurostat: { status: 'stub', last_fetched: null },
-            apiaberta: { status: 'stub', last_fetched: null },
-            ense: { status: 'stub', last_fetched: null },
-            mibgas: { status: 'stub', last_fetched: null },
-            omie: { status: 'stub', last_fetched: null },
-        },
+        providers: sources,
+        providerCount: statuses.length,
+        liveCount: statuses.filter(s => s.status === 'live').length,
+        staleCount: statuses.filter(s => s.status === 'stale').length,
+        errorCount: statuses.filter(s => s.status === 'error').length,
         timestamp: new Date().toISOString(),
     });
 });

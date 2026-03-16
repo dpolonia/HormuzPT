@@ -11,6 +11,22 @@
   </head>
   <body>
     <div id="root"></div>
+    <div id="crash-log" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:99999;background:#0F172A;color:#ef4444;padding:40px;font-family:monospace;white-space:pre-wrap;overflow:auto;"></div>
+    <script>
+      var crashLog = document.getElementById('crash-log');
+      var errors = [];
+      function showCrash(msg) {
+        errors.push(msg);
+        crashLog.style.display = 'block';
+        crashLog.textContent = 'CRASH LOG\n=========\n\n' + errors.join('\n\n---\n\n');
+      }
+      window.onerror = function(msg, src, line, col, err) {
+        showCrash('onerror: ' + msg + '\nat ' + src + ':' + line + ':' + col + '\n' + (err && err.stack || ''));
+      };
+      window.addEventListener('unhandledrejection', function(e) {
+        showCrash('unhandledrejection: ' + (e.reason && e.reason.stack || e.reason || 'unknown'));
+      });
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

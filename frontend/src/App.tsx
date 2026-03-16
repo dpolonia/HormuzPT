@@ -10,8 +10,9 @@ import { MacroPanel } from './components/context/MacroPanel';
 import { HistoryPage } from './components/history/HistoryPage';
 import { ModelChat } from './components/chat/ModelChat';
 import { CostDashboard } from './components/history/CostDashboard';
+import { EconomicDashboard } from './components/model/EconomicDashboard';
 
-type View = 'modelo' | 'contexto' | 'historico' | 'custos';
+type View = 'modelo' | 'cenarios' | 'contexto' | 'historico' | 'custos';
 
 export default function App() {
     const [view, setView] = useState<View>('modelo');
@@ -58,6 +59,21 @@ export default function App() {
                                     <PriceDashboard results={results} controls={controls} modelState={modelState} />
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                )}
+
+                {view === 'cenarios' && (
+                    <div className="fade-in">
+                        <div className="page-header">
+                            <h2>🔬 Cenarios Macro — Motor Economico</h2>
+                            <span className="header-badge">
+                                <span className="dot" />
+                                Sprint 14
+                            </span>
+                        </div>
+                        <div className="page-body">
+                            <EconomicDashboard key="econ-dash" />
                         </div>
                     </div>
                 )}

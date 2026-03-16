@@ -90,8 +90,8 @@ export function MacroPanel() {
             <div className="card fade-in stagger-2" style={{ padding: 24 }}>
                 <div className="card-title">ℹ️ Nota</div>
                 <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: 1.6 }}>
-                    Os valores serão preenchidos quando os providers de dados (INE, BPstat, ECB, Eurostat)
-                    forem conectados às APIs reais. Actualmente a mostrar a estrutura dos dados com placeholders.
+                    Dados obtidos em tempo real de INE, BPstat, ECB e Eurostat com cache resiliente (TTL 6-24h).
+                    O indicador de estado (verde/amarelo/vermelho) reflecte a frescura dos dados.
                 </p>
             </div>
         </div>

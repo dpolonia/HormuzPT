@@ -1,0 +1,4 @@
+{
+  "description": "Infrastructure lifecycle placeholder for HormuzPT",
+  "note": "Keep deployment and infrastructure lifecycle configuration under infra/ and separate from agent instructions."
+}

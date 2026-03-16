@@ -18,8 +18,13 @@ export function useModelState() {
     useEffect(() => {
         apiGet<ModelStateResponse>('/model-state')
             .then((res) => {
-                setState(res.state);
-                setSource(res.source);
+                if (res?.state && res.state.base_eff_gas !== undefined) {
+                    setState(res.state);
+                    setSource(res.source || 'api');
+                } else {
+                    // API returned 200 but no valid state — keep defaults
+                    setSource('fallback');
+                }
             })
             .catch(() => {
                 // Fallback to defaults
